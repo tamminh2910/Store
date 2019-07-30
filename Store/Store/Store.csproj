@@ -155,6 +155,8 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\QLNhaCungCapController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLNhaSanXuatController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QLPhieuNhapController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyDonHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyLoaiSPController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLySanPhamController.cs" />
     <Compile Include="Areas\Admin\Controllers\TrangChuController.cs" />
@@ -7262,10 +7264,14 @@
     <Content Include="Areas\Admin\Views\QLNhaCungCap\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QLNhaCungCap\Index.cshtml" />
     <Content Include="Areas\Admin\Views\QLNhaSanXuat\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\QLNhaSanXuat\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\QLNhaSanXuat\Details.cshtml" />
     <Content Include="Areas\Admin\Views\QLNhaSanXuat\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QLNhaSanXuat\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\QLPhieuNhap\NhapHang.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\ChuaGiao.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\ChuaThanhToan.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DaGiaoDaThanhToan.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DuyetDonHang.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

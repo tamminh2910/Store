@@ -1,0 +1,161 @@
+﻿@model IEnumerable<Entities.DonDatHang>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 20);
+}
+<section class="content-header">
+    <h1>
+        Quản lý đơn hàng
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "TrangChu")"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Quản lý đơn hàng</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <h2>Quản lý đơn hàng (Danh sách đơn hàng chưa giao đã thanh toán)</h2>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                   
+                    <br />
+                    @*Dùng boostrap tạo 1 tab control với các liên kết đến các view khác*@
+                    <ul class="nav nav-tabs">
+                        <li role="presentation"><a href="@Url.Action("ChuaThanhToan","QuanLyDonHang")">Chưa thanh toán</a></li>
+                        <li role="presentation" class="active"><a href="@Url.Action("ChuaGiao", "QuanLyDonHang")">Chưa giao & Đã thanh toán</a></li>
+                        <li role="presentation"><a href="@Url.Action("DaGiaoDaThanhToan", "QuanLyDonHang")">Đã giao & Đã thanh toán</a></li>
+                    </ul>
+
+                    <br />
+                    <br />
+
+                    @*Dùng control Webgrid thể hiện dữ liệu model là danh sách các đơn đặt hàng được
+                        truy vấn theo điều kiện từ controller*@
+
+                    <table id="tblDSSP" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>Mã đơn hàng</th>
+                                <th>
+                                    Tên khách hàng
+                                </th>
+                                <th>Ngày đặt</th>
+                                <th>Tình trạng giao hàng</th>
+                                <th>Ngày giao</th>
+                                <th>Đã thanh toán</th>
+                                <th>Ưu đãi</th>
+                                <th>Đã hủy</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>@item.MaDDH</td>
+                                    <td>
+                                        @if (item.MaKH != null)
+                                        {
+                                            <p>@item.KhachHang.TenKH</p>
+                                        }
+                                        else
+                                        {
+                                            <p></p>
+                                        }
+                                    </td>
+                                    <td>@item.NgayDat</td>
+                                    <td>
+                                        @item.TinhTrangGiaoHang
+                                    </td>
+                                    <td>
+                                        @item.NgayGiao
+                                    </td>
+                                    <td>
+                                        @item.DaThanhToan
+                                    </td>
+                                    <td>
+                                        @item.UuDai
+                                    </td>
+                                    <td>
+                                        @item.DaHuy
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Duyệt đơn hàng", "DuyetDonHang", new { id = item.MaDDH }, new { @target = "_blank" })
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="9">
+                                    Tổng số dòng : @Model.Count()
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+<style>
+    .nav > li {
+        background: rgba(0,0,0,.5);
+    }
+    .nav > li > a {
+            color: white;
+        }
+    .divTable {
+        width: 100%;
+        border: 1px solid #999999;
+    }
+
+        .divTable td {
+            border: 1px solid #999999;
+        }
+
+    .gridHead {
+        background-color: Green;
+    }
+
+        .gridHead > th > a {
+            color: #fff;
+        }
+
+    .gridFooter {
+        font-weight: bold;
+    }
+
+    .divTable a {
+        color: blue;
+    }
+    /*.gridRow {
+        color:#fff;
+        background-color:blueviolet;
+    }
+    .gridAltRow {
+        color:#fff;
+        background-color:darkorange;
+    }*/
+
+
+</style>

@@ -232,6 +232,9 @@
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Quản lý sản phẩm</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="@Url.Action("DanhSachSanPham","QuanLySanPham")"><i class="fa fa-circle-o"></i> Danh sách sản phẩm</a></li>
@@ -242,6 +245,9 @@
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Quản lý Loại sản phẩm</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="@Url.Action("Index","QuanLyLoaiSP")"><i class="fa fa-circle-o"></i> Danh sách loại sản phẩm</a></li>
@@ -275,11 +281,15 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="../widgets.html">
-                            <i class="fa fa-th"></i> <span>Widgets</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green">Hot</small>
-                            </span>
+                        <a href="@Url.Action("ChuaThanhToan","QuanLyDonHang")">
+                            <i class="fa fa-th"></i> <span>Quản lý đơn hàng</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("PhieuNhap","QLPhieuNhap")">
+                            <i class="fa fa-th"></i> <span>Quản lý phiếu nhập</span>
+
                         </a>
                     </li>
 
@@ -641,6 +651,7 @@
     @RenderSection("uploadImage3", false)
     @RenderSection("uploadImage4", false)
     @RenderSection("uploadLogo",false)
+    @RenderSection("inDonHang",false)
     <script>
         $(document).ready(function () {
             $('.sidebar-menu').tree()

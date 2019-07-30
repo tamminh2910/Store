@@ -105,31 +105,22 @@ namespace Store.Areas.Admin.Controllers
         }
 
         // GET: Admin/QLNhaSanXuat/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int? page, string searchString)
         {
-            if (id == null)
+            var nsx = db.NhaSanXuats.FirstOrDefault(x => x.MaNSX == id);
+            if (nsx == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Content("<alert>Không tồn tại nhà sản xuất!</alert>");
             }
-            NhaSanXuat nhaSanXuat = db.NhaSanXuats.Find(id);
-            if (nhaSanXuat == null)
+            else
             {
-                return HttpNotFound();
+                db.NhaSanXuats.Remove(nsx);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { page, searchString });
             }
-            return View(nhaSanXuat);
         }
-
-        // POST: Admin/QLNhaSanXuat/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            NhaSanXuat nhaSanXuat = db.NhaSanXuats.Find(id);
-            db.NhaSanXuats.Remove(nhaSanXuat);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+            
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)
