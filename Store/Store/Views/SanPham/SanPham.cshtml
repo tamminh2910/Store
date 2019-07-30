@@ -1,0 +1,47 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<Entities.SanPham>
+@using Store.ExtensionMethod
+@{
+    ViewBag.Title = "SanPham";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+<div class=" bottom-product">
+    @if (Model.Count > 0)
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-md-4 bottom-cd simpleCart_shelfItem">
+                <div class="product-at ">
+                    <a href="@Url.Action("XemChiTiet","SanPham",new { @id=item.MaSP})">
+                        <img class="img-responsive" src="@Url.Content("~/Content/HinhAnhSP/"+item.HinhAnh)" alt="" style="height:150px;width:150px; margin:auto;">
+                        <div class="pro-grid">
+                            <span class="buy-in">Chi Tiết</span>
+                        </div>
+                    </a>
+                </div>
+                <p class="tun">@item.TenSP</p>
+                @Ajax.RawActionLink("<p class='number item_price'><i> </i>" + item.DonGia.Value.ToString("#,##") + " VND </p>", "ThemGioHang", "GioHang", new { @maSP = item.MaSP, @strUrl = Request.Url.ToString() }, new AjaxOptions { UpdateTargetId = "giohang", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", }, new { @class = "item_add" })
+
+            </div>
+
+        }
+
+        <div class="clearfix"> </div>
+        <br />
+        <div style="text-align:center;">
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @(Model.PageCount)
+            @Html.PagedListPager(Model, page => Url.Action("SanPham", "SanPham", new { @maNSX = ViewBag.MaNSX, @maLoaiSP = ViewBag.MaLoaiSP, @page = page, @tuKhoa = ViewBag.TuKhoa }))
+        </div>
+
+    }
+    else
+    {
+        <h2>Không tìm thấy sản phẩm!</h2>
+        
+    }
+</div>
+
+
+

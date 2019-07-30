@@ -1,0 +1,116 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Entities.NhaSanXuat>
+
+@{
+    ViewBag.Title = "Quản lý nhà sản xuất";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Quản lý nhà sản xuất
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "TrangChu")"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Quản lý nhà sản xuất</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Danh sách nhà sản xuất</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm("Index", "QLNhaSanXuat", FormMethod.Get))
+                    {
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                                </span>
+                            </div>
+                        </div>
+                    }
+
+
+                    <div class="col-md-1">
+
+                        <a href="@Url.Action("Create", "QLNhaSanXuat")" class="btn btn-success">Thêm mới</a>
+                    </div>
+                    <div class=" clearfix"></div>
+                    <br />
+
+                    <div>
+                        <table id="tblDSSP" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+
+                                    <th>ID</th>
+                                    <th>
+                                        Tên nhà sản xuất
+                                    </th>
+                                    <th>Thông tin</th>
+                                    <th>Logo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>@item.MaNSX</td>
+                                        <td>
+                                            @item.TenNSX
+                                        </td>
+                                        <td>@item.ThongTin</td>
+                                        <td>
+                                            <img src="@Url.Content("~/Content/Logo/"+item.Logo)" width="70" height="70" />
+
+                                        </td>
+
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <a href="@Url.Action("Edit","QLNhaSanXuat", new { id = item.MaNSX })" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Chỉnh sửa">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+
+                                            <a href="@Url.Action("Delete","QLNhaSanXuat", new { id = item.MaNSX, page = ViewBag.Page, searchString = ViewBag.CurrentFilter })" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Xóa">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7">
+                                        Tổng số dòng : @Model.TotalItemCount
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <br />
+
+                        <p>
+                            Trang @(Model.PageNumber > Model.PageCount ? 0 : Model.PageNumber) / @Model.PageCount
+
+                            @Html.PagedListPager(Model, page => Url.Action("Index", "QLNhaSanXuat", new { @searchString = ViewBag.CurrentFilter, @page = page }))
+                        </p>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

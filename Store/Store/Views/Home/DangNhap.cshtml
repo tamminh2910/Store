@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+
+    <div class="col-md-5 account-top">
+        @using (Html.BeginForm())
+        {
+            <div>
+                <span>Tài khoản</span>
+                @Html.TextBox("TaiKhoan")
+            </div>
+            <div>
+                <span>Mật khẩu</span>
+                @Html.Password("MatKhau")
+            </div>
+            <input type="submit" style="font-size:15px;" value="Đăng nhập">
+        }
+        <hr />
+       
+    </div>
+
+    

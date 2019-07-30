@@ -1,0 +1,118 @@
+﻿@model Entities.NhaSanXuat
+
+@{
+    ViewBag.Title = "Thêm mới nhà sản xuất";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Quản lý nhà sản xuất
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "TrangChu")"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="@Url.Action("Index", "QLNhaSanXuat")">Quản lý nhà sản xuất</a></li>
+        <li class="active">Thêm mới</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Thêm mới</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <br />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TenNSX, "Tên nhà sản xuất", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.TenNSX, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TenNSX, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control" } })
+                                    <input type="file" id="fileUpload" accept="image/*" name="fileUpload" style="display:none;" />
+                                    <button type="button" id="btnUpload" class="btn btn-default">Chọn hình</button>
+                                    <br />
+                                    <img id="pictureUpload" width="100" height="100" style="display:none;" />
+                                    @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ThongTin, "Thông tin", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ThongTin, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ThongTin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Thêm mới" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+@section uploadLogo{
+    <script type="text/javascript">
+        $(function () {
+            $('#btnUpload').click(function () {
+                $('#fileUpload').click();
+            });
+
+            $('#fileUpload').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $(this).get(0);
+                    var files = fileUpload.files;
+
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("ProcessUpload","QLNhaSanXuat")",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src','/Content/Logo/'+ urlImage);
+                            $('#pictureUpload').css('display', '');
+                            $('#Logo').val(urlImage);
+
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi Upload ' + err.statusText)
+                        }
+                    });
+
+                }
+            });
+        })
+    </script>
+}

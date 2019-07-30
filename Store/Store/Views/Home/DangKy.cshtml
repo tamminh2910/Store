@@ -1,0 +1,87 @@
+﻿@using CaptchaMvc.HtmlHelpers;
+@using CaptchaMvc.Models;
+@model Entities.ThanhVien
+
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+    <div class=" register">
+        @if ((bool)ViewBag.Success != true)
+        {
+            <h1>Đăng ký thành viên</h1>
+            using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-md-4 register-top-grid">
+                    <h3>Thông tin tài khoản</h3>
+                    <div>
+                        <span>Tài khoản</span>
+                        @Html.EditorFor(model => model.TaiKhoan)
+                        @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger", @style="text-color:'red'" })
+                    </div>
+                    <div>
+                        <span>Họ tên</span>
+                        @Html.EditorFor(model => model.HoTen)
+                        @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                    </div>
+                    <div>
+                        <span>Địa chỉ</span>
+                        @Html.EditorFor(model => model.DiaChi)
+                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                    </div>
+                    <div>
+                        <span>Email</span>
+                        @Html.EditorFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div>
+                        <span>Điện thoại</span>
+                        @Html.EditorFor(model => model.SoDienThoai)
+                        @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="col-md-4 register-bottom-grid register-top-grid">
+                    <h3>Thông tin đăng nhập</h3>
+
+                    <div>
+                        <span>Mật khẩu</span>
+                        @Html.EditorFor(model => model.MatKhau)
+                        @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                    </div>
+                    <div>
+                        <span>Nhập lại mật khẩu</span>
+                        @Html.TextBox("NhapLaiMatKhau")
+                    </div>
+                    <div>
+                        <span>Câu hỏi bí mật</span>
+                        @Html.DropDownList("CauHoi")
+                    </div>
+                    <div>
+                        <span>Câu trả lời</span>
+                        @Html.TextBox("CauTraLoi")
+                    </div>
+                    <div>
+                        @Html.Captcha(5)
+
+                    </div>
+                    <input type="submit" value="Đăng ký">
+
+                </div>
+                <div class="clearfix"> </div>
+
+            }
+        }
+        else
+        {
+            <div>
+                <h2> @ViewBag.ThongBao</h2>
+            </div>
+        }
+
+    </div>
+

@@ -1,0 +1,381 @@
+﻿@model Entities.SanPham
+
+@{
+    ViewBag.Title = "Thêm mới sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Quản lý sản phẩm
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "TrangChu")"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="@Url.Action("DanhSachSanPham", "QuanLySanPham")">Quản lý sản phẩm</a></li>
+        <li class="active">Thêm mới</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Thêm mới sản phẩm</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DonGia, "Giá bán", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.DonGia, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CauHinh, "Cấu hình", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.CauHinh, new { htmlAttributes = new { @class = "form-control", @rows = "10", @cols = "80" } })
+                                    @Html.ValidationMessageFor(model => model.CauHinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control", @rows = "10", @cols = "80" } })
+                                    @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SoLuongTon, "Số lượng", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.SoLuongTon, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SoLuongTon, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MaNCC, "Nhà cung cấp", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("MaNCC", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MaNCC, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MaNSX, "Nhà Sản xuất", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("MaNSX", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MaNSX, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MaLoaiSP, "Loại sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("MaLoaiSP", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MaLoaiSP, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.HinhAnh, "Hình ảnh", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.HinhAnh, new { htmlAttributes = new { @class = "form-control"} })
+                                    <input type="file" id="fileUpload" accept="image/*" name="fileUpload" style="display:none;" />
+                                    <button type="button" id="btnUpload" class="btn btn-default">Chọn hình</button>
+                                    <br />
+                                    <img id="pictureUpload" width="100" height="100" style="display:none;" />
+                                    @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.HinhAnh1, "Hình ảnh 1", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.HinhAnh1, new { htmlAttributes = new { @class = "form-control"} })
+                                    <input type="file" id="fileUpload1" accept="image/*" name="fileUpload" style="display:none;" />
+                                    <button type="button" id="btnUpload1" class="btn btn-default">Chọn hình</button>
+                                    <br />
+                                    <img id="pictureUpload1" width="100" height="100" style="display:none;" />
+                                    @Html.ValidationMessageFor(model => model.HinhAnh1, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.HinhAnh2, "Hình ảnh 2", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.HinhAnh2, new { htmlAttributes = new { @class = "form-control"} })
+                                    <input type="file" id="fileUpload2" accept="image/*" name="fileUpload" style="display:none;" />
+                                    <button type="button" id="btnUpload2" class="btn btn-default">Chọn hình</button>
+                                    <br />
+                                    <img id="pictureUpload2" width="100" height="100" style="display:none;" />
+                                    @Html.ValidationMessageFor(model => model.HinhAnh2, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.HinhAnh3, "Hình ảnh 3", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+
+                                    @Html.EditorFor(model => model.HinhAnh3, new { htmlAttributes = new { @class = "form-control"} })
+                                    <input type="file" id="fileUpload3" accept="image/*" name="fileUpload" style="display:none;" />
+                                    <button type="button" id="btnUpload3" class="btn btn-default">Chọn hình</button>
+                                    <br />
+                                    <img id="pictureUpload3" width="100" height="100" style="display:none;" />
+                                    @Html.ValidationMessageFor(model => model.HinhAnh3, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.HinhAnh4, "Hình ảnh 4", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.HinhAnh4, new { htmlAttributes = new { @class = "form-control" } })
+                                    <input type="file" id="fileUpload4" accept="image/*" name="fileUpload" style="display:none;" />
+                                    <button type="button" id="btnUpload4" class="btn btn-default">Chọn hình</button>
+                                    <br />
+                                    <img id="pictureUpload4" width="100" height="100" style="display:none;" />
+                                    @Html.ValidationMessageFor(model => model.HinhAnh4, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Thêm mới" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div>
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+@section Script{
+    <script src="~/Areas/Admin/Content/bower_components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('MoTa');
+        CKEDITOR.replace('CauHinh');
+    </script>
+}
+
+@section uploadImage{
+    <script type="text/javascript">
+        $(function () {
+            $('#btnUpload').click(function () {
+                $('#fileUpload').click();
+            });
+
+            $('#fileUpload').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $(this).get(0);
+                    var files = fileUpload.files;
+
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("ProcessUpload","QuanLySanPham")",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src','/Content/HinhAnhSP/'+ urlImage);
+                            $('#pictureUpload').css('display', '');
+                            $('#HinhAnh').val('/Content/HinhAnhSP/' + urlImage);
+
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi Upload ' + err.statusText)
+                        }
+                    });
+
+                }
+            });
+        })
+    </script>
+}
+
+@section uploadImage1{
+    <script type="text/javascript">
+        $(function () {
+            $('#btnUpload1').click(function () {
+                $('#fileUpload1').click();
+            });
+
+            $('#fileUpload1').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $(this).get(0);
+                    var files = fileUpload.files;
+
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("ProcessUpload","QuanLySanPham")",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload1').attr('src','/Content/HinhAnhSP/'+ urlImage);
+                            $('#pictureUpload1').css('display', '');
+                            $('#HinhAnh1').val('/Content/HinhAnhSP/' + urlImage);
+
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi Upload ' + err.statusText)
+                        }
+                    });
+
+                }
+            });
+        })
+    </script>
+}
+
+@section uploadImage2{
+    <script type="text/javascript">
+        $(function () {
+            $('#btnUpload2').click(function () {
+                $('#fileUpload2').click();
+            });
+
+            $('#fileUpload2').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $(this).get(0);
+                    var files = fileUpload.files;
+
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("ProcessUpload","QuanLySanPham")",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload2').attr('src','/Content/HinhAnhSP/'+ urlImage);
+                            $('#pictureUpload2').css('display', '');
+                            $('#HinhAnh2').val('/Content/HinhAnhSP/' + urlImage);
+
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi Upload ' + err.statusText)
+                        }
+                    });
+
+                }
+            });
+        })
+    </script>
+}
+
+@section uploadImage3{
+    <script type="text/javascript">
+        $(function () {
+            $('#btnUpload3').click(function () {
+                $('#fileUpload3').click();
+            });
+
+            $('#fileUpload3').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $(this).get(0);
+                    var files = fileUpload.files;
+
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("ProcessUpload","QuanLySanPham")",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload3').attr('src','/Content/HinhAnhSP/'+ urlImage);
+                            $('#pictureUpload3').css('display', '');
+                            $('#HinhAnh3').val('/Content/HinhAnhSP/' + urlImage);
+
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi Upload ' + err.statusText)
+                        }
+                    });
+
+                }
+            });
+        })
+    </script>
+}
+
+@section uploadImage4{
+    <script type="text/javascript">
+        $(function () {
+            $('#btnUpload4').click(function () {
+                $('#fileUpload4').click();
+            });
+
+            $('#fileUpload4').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $(this).get(0);
+                    var files = fileUpload.files;
+
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("ProcessUpload","QuanLySanPham")",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload4').attr('src','/Content/HinhAnhSP/'+ urlImage);
+                            $('#pictureUpload4').css('display', '');
+                            $('#HinhAnh4').val('/Content/HinhAnhSP/' + urlImage);
+
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi Upload ' + err.statusText)
+                        }
+                    });
+
+                }
+            });
+        })
+    </script>
+}

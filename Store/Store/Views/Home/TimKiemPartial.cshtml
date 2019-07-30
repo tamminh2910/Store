@@ -1,0 +1,9 @@
+﻿<div class="search">
+    @using (Html.BeginForm("TimKiemSanPham","SanPham",FormMethod.Get))
+    {
+        @Html.TextBox("tuKhoa",null,new { @placeholder="Nhập từ khóa",@type="text"})
+       <input type="submit" value="Tìm kiếm" />
+
+    }
+   
+</div>

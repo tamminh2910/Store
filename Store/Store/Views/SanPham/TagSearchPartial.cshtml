@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Entities.NhaSanXuat>
+
+<div class="col-md-3 product-price">
+    <div class="product-middle">
+
+        <div class="fit-top">
+            <h6 class="shop-top">Lorem Ipsum</h6>
+            <a href="#" class="shop-now">SHOP NOW</a>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <div class="sellers">
+        <div class="of-left-in">
+            <h3 class="tag">Tags</h3>
+        </div>
+        <div class="tags">
+            <ul>
+                
+                @foreach (var item in Model)
+                {
+                    <li><a href="@Url.Action("TagSearch", "SanPham", new {@maNSX =item.MaNSX })">@item.TenNSX</a></li>
+                }
+
+
+                <div class="clearfix"> </div>
+            </ul>
+
+        </div>
+
+    </div>
+    <!---->
+
+
+</div>

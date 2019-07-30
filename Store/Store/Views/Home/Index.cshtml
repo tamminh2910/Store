@@ -1,0 +1,26 @@
+﻿@using Entities;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+@{
+    var listDTM = ViewBag.ListDTM as IEnumerable<SanPham>;
+    var listMTB = ViewBag.ListMTB as IEnumerable<SanPham>;
+    var listLaptop = ViewBag.ListLaptop as IEnumerable<SanPham>;
+}
+<div class="content-top">
+   
+    <div class="container">
+        <h1>Điện thoại mới nhất</h1>
+        @Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", listDTM)
+    </div>
+    <div class="container">
+        <h1>Máy tính bảng mới nhất</h1>
+        @Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", listMTB)
+    </div>
+    <div class="container">
+        <h1>Laptop mới nhất</h1>
+        @Html.Partial("~/Views/SanPham/SanPhamStyle2Partial.cshtml", listLaptop)
+    </div>
+
+</div>

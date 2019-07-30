@@ -1,0 +1,23 @@
+﻿@using Entities;
+
+@{
+
+}
+
+@if (Session["TaiKhoan"] != null)
+{
+    var tv = Session["TaiKhoan"] as ThanhVien;
+
+    <ul>
+        <li><p style="color:lightblue;">Chào, @tv.HoTen</p></li>
+        <li><a href="@Url.Action("DangXuat","Home")">Đăng xuất</a></li>
+    </ul>
+}
+else
+{
+    <ul>
+        <li><a href="@Url.Action("DangNhap","Home")">Đăng nhập</a></li>
+        <li><a href="@Url.Action("DangKy","Home")">Đăng ký</a></li>
+    </ul>
+}
+

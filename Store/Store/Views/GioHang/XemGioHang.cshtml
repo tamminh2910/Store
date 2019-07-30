@@ -1,0 +1,90 @@
+﻿@using Entities
+@model IEnumerable<Store.Models.ItemGioHang>
+@{
+    ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+
+@if (Model.Count() > 0)
+{
+
+    <div class="table-responsive">
+        <h2 style="text-align:center; width:100%">Giỏ hàng</h2>
+        <br />
+        @Html.Partial("~/Views/GioHang/XemGioHangPartial.cshtml")
+    </div>
+    <div id="thongtin">
+        @if (Session["TaiKhoan"] != null)
+        {
+            var tv = Session["TaiKhoan"] as ThanhVien;
+            <div>
+                <a href="#" id="dathang" class="btn btn-success">Đặt hàng</a>
+            </div>
+            <div id="divDatHang" class="col-lg-6 col-lg-offset-3" style="display:none;">
+                @using (Html.BeginForm("ThanhToan", "GioHang", FormMethod.Post))
+                {
+                    <h2>Thông tin đặt hàng</h2>
+                    <br />
+                    <div class="form-group">
+                        <span>
+                            Họ tên
+                        </span>
+                        @Html.TextBox("HoTen", tv.HoTen, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <span>
+                            Địa chỉ
+                        </span>
+                        @Html.TextBox("DiaChi", tv.DiaChi, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <span>
+                            Email
+                        </span>
+                        @Html.TextBox("Email", tv.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <span>
+                            Số điện thoại
+                        </span>
+                        @Html.TextBox("SoDienThoai", tv.SoDienThoai, new { @class = "form-control" })
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-success" value="Đặt hàng" />
+                    </div>
+                }
+            </div>
+            <div class="clearfix"></div>
+        }
+        else
+        {
+            
+            <a href="@Url.Action("DangNhap","Home")" class="btn btn-success">Đăng nhập đặt hàng</a>
+        }
+    </div>
+}
+else
+{
+    if (ViewBag.ThongBao != null)
+    {
+        <h2>Đặt hàng thành công!. <a href="@Url.Action("SanPham","SanPham")">Tiếp tục mua hàng</a></h2>
+    }
+    else
+    {
+        <h2>Giỏ hàng trống!. <a href="@Url.Action("SanPham","SanPham")">Tiếp tục mua hàng</a></h2>
+
+    }
+}
+@section datHang{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dathang').click(function () {
+                $('#divDatHang').css('display', '');
+                $(this).css('display', 'none');
+            });
+        });
+
+    </script>
+}
+
