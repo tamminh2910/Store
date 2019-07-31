@@ -6,9 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using CaptchaMvc.HtmlHelpers;
 using CaptchaMvc.Models;
+using System.Web.Security;
 
 namespace Store.Controllers
 {
+   
     public class HomeController : Controller
     {
 
@@ -110,6 +112,14 @@ namespace Store.Controllers
             ThanhVien tk = db.ThanhViens.SingleOrDefault(x => x.TaiKhoan == staikhoan && x.MatKhau == smatkhau);
             if (tk != null)
             {
+                var lstQuyen = db.LoaiThanhVien_Quyen.Where(x => x.MaLoaiTV == tk.MaLoaiTV).ToList();
+                string quyen = "";
+                foreach (var item in lstQuyen)
+                {
+                    quyen += item.MaQuyen + ",";
+                }
+                quyen = quyen.Substring(0, quyen.Length - 1);
+                PhanQuyen(tk.TaiKhoan.ToString(), quyen);
                 Session["TaiKhoan"] = tk;
                 var tv = Session["TaiKhoan"] as ThanhVien;
                 return RedirectToAction("Index");
@@ -117,10 +127,28 @@ namespace Store.Controllers
             ViewBag.Error = "Tài khoản hoặc mật khẩu không đúng";
             return View();
         }
+
+        private void PhanQuyen(string tk, string quyen)
+        {
+            FormsAuthentication.Initialize();
+            var ticket = new FormsAuthenticationTicket(1, tk, DateTime.Now, DateTime.Now.AddHours(3), false, quyen,FormsAuthentication.FormsCookiePath);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket));
+            if (ticket.IsPersistent)
+            {
+                cookie.Expires = ticket.Expiration;
+            }
+            Response.Cookies.Add(cookie);
+        }
+
+        public ActionResult LoiQuyen()
+        {
+            return View();
+        }
         public ActionResult DangXuat()
         {
             var tv = Session["TaiKhoan"] as KhachHang;
             Session["TaiKhoan"] = null;
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
     }

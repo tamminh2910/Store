@@ -7315,6 +7315,7 @@
     <Content Include="Views\GioHang\XemGioHangPartial.cshtml" />
     <Content Include="Views\Home\TimKiemPartial.cshtml" />
     <Content Include="Views\SanPham\TagSearchPartial.cshtml" />
+    <Content Include="Views\Home\LoiQuyen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
